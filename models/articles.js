@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+var mongoose = require("mongoose")
 
 var Schema = mongoose.Schema;
 
@@ -7,7 +7,7 @@ var articleSchema = new Schema({
     type: String,
     required: true
   },
-  link: {
+  img: {
     type: String,
     required: true,
   },

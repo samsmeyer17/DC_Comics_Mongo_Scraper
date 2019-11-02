@@ -1,10 +1,14 @@
-import { mongoose } from "mongoose";
-import { express } from "express";
-import { expresshandlebars } from "express-handlebars";
-import { logger } from "morgan";
-import { axios } from "axios";
-import { cheerio } from "cheerio";
-import { db } from "./models";
+var mongoose = require("mongoose")
+var express = require("express")
+var expresshb = require("express-handlebars")
+var logger = require("morgan")
+var axios = require("axios")
+var cheerio = require("cheerio")
+
+
+var db = require("./models")
+
+var PORT = process.env.PORT || 8080;
 
 var app = express();
 
@@ -17,28 +21,41 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 mongoose.connect(MONGODB_URI)
 
-app.get("/scrape", function(req, res) {
-  axios.get("https://www.dccomics.com/comics").then(function(response) {
+app.get("/scrape", function (req, res) {
+  axios.get("https://www.dccomics.com/comics").then(function (response) {
     var $ = cheerio.load(response.data)
 
-    $("div.slide__content").each(function(i, element) {
-      var results = {};
-      var img = $(element).find('a').find('img').attr('src');
-      var title = $(element).find('span').find('a').attr('href')
+    $("div.slide__content").each(function (i, element) {
+      var result = {}
+      result.img = $(element).find('a').find('img').attr('src');
+      result.title = $(element).find('span').find('a').attr('href')
 
-      results.push({
-        img: img,
-        title: title
+    
+    db.Article.create(result)
+      .then(function (dbArticle) {
+        console.log(dbArticle)
+      })
+      .catch(function (err) {
+        console.log(err);
       });
     });
-    db.articles.update({articles: results}, function(results) {
-
-    })
-    console.log(results);
+    res.send("Scrape Complete")
   })
-  res.send("Scrape Complete")
+  
+
+  app.get("/articles", function(req, res){
+    db.Article.find({})
+    .then((dbArticle) => {
+      res.json(dbArticle)
+    })
+    .catch((err) => {
+      res.json(err)
+    }) 
+  })
+
+
 })
 
-app.listen(MONGODB_URI, function() {
-  console.log("App listening on: " + MONGODB_URI)
+app.listen(PORT, function () {
+  console.log("App listening on: " + PORT)
 })
