@@ -3,3 +3,11 @@
   margin: 20px 30px;
   float: left;
 }
+
+.nav-wrapper {
+  background: blue;
+}
+
+body {
+  background: lightgrey;
+}

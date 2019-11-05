@@ -28,3 +28,7 @@ $(".unsave-article-btn").on("click", function() {
     location.reload()
   })
 })
+
+$("note-btn").on("click", function() {
+  
+})

@@ -1,7 +1,17 @@
 {{#each articles}}
 {{#if saved}}
-<img src="{{{img}}}"></img>
-<p>{{{title}}}</p>
-<button data-id={{_id}} class="unsave-article-btn">Unsave Article</button>
+
+<div class="col s12 m6">
+  <div class="card">
+    <div class="card-image">
+      <img src="{{{img}}}"></img>
+      <a class="note-btn btn-floating halfway-fab waves-effect waves blue"><i class="material-icons">&#129300;</i></a>
+    </div>
+    <div class="card-content">
+      <p>{{{title}}}</p>
+      <button data-id={{_id}} class="unsave-article-btn">Delete Comic Cover</button>
+    </div>
+  </div>
+</div>
 {{/if}}
 {{/each}}

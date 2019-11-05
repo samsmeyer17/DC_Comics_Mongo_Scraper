@@ -33,7 +33,7 @@ app.get("/scrape", function (req, res) {
     $("div.slide__content").each(function (i, element) {
       var result = {}
       result.img = $(element).find('a').find('img').attr('src');
-      result.title = $(element).find('span').attr('a')
+      result.title = $(element).find('span').find('a').text()
 
 
       db.Article.create(result)
@@ -45,6 +45,7 @@ app.get("/scrape", function (req, res) {
         });
     });
     res.send("Scrape Complete")
+    window.location("/articles")
   })
 })
 
