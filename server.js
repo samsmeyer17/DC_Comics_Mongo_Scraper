@@ -34,6 +34,7 @@ app.get("/scrape", function (req, res) {
       var result = {}
       result.img = $(element).find('a').find('img').attr('src');
       result.title = $(element).find('span').find('a').text()
+      
 
 
       db.Article.create(result)
