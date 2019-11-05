@@ -29,6 +29,7 @@ $(".unsave-article-btn").on("click", function() {
   })
 })
 
-$("note-btn").on("click", function() {
+$("add-note-btn").on("submit", function() {
   
+
 })

@@ -45,6 +45,21 @@
 			</ul>
 		</div>
 	</nav>
+
+	<!-- Modal Structure -->
+	<div id="note-modal" class="note-modal">
+		<div class="modal-content">
+			<h4>Add a Note</h4>
+			<form id="note-form" action="submit">
+				<input type="text">Title</input>
+				<input type="text">Note</input>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="add-note-btn">Add Note</button>
+			<button class="cancel-note-btn">Cancel</button>
+		</div>
+	</div>
 	{{{ body }}}
 
 	<script src="../app.js"></script>
