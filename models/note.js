@@ -3,8 +3,18 @@ var mongoose = require("mongoose")
 var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
-  title: String,
-  body: String
+  id: {
+    type: Schema.Types.ObjectID,
+    ref: "id"
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  body: {
+    type: String,
+    required: true
+  }
 });
 
 var Note = mongoose.model("Note", NoteSchema);

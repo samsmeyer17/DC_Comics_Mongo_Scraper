@@ -26,7 +26,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 mongoose.connect(MONGODB_URI)
 
-app.get("/scrape", function (req, res) {
+app.get("/", function (req, res) {
   axios.get("https://www.dccomics.com/comics").then(function (response) {
     var $ = cheerio.load(response.data)
 
@@ -45,7 +45,8 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
-    res.render("/articles")
+    res.reload();
+
   })
 })
 
@@ -69,10 +70,6 @@ app.get("/", function (req, res) {
     })
 })
 
-app.get("/note-modal", function(req, res) {
-  res.render("/note")
-})
-
 app.get("/saved", function (req, res) {
   db.Article.find({})
     .then((dbArticle) => {
@@ -83,7 +80,7 @@ app.get("/saved", function (req, res) {
     })
 })
 
-app.get("/notes/:id", function (req, res) {
+app.post("/notes/:id", function (req, res) {
   db.Note.create(req.body)
     .then((dbNote) => {
       console.log(dbNote)
@@ -99,8 +96,7 @@ app.put("/notes/:noteTitle", function (req, res) {
 })
 
 app.put("/articles/:id", function (req, res) {
-
-  // req.params  or
+  // req.params or req.body
   let id = req.params.id
   db.Article.findOneAndUpdate({ _id: id }, { $set: { saved: true } })
     .then(function (dbArticle) {
