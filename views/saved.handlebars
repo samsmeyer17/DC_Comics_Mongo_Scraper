@@ -1,0 +1,7 @@
+{{#each articles}}
+{{#if saved}}
+<img src="{{{img}}}"></img>
+<p>{{{title}}}</p>
+<button data-id={{_id}} class="unsave-article-btn">Unsave Article</button>
+{{/if}}
+{{/each}}
