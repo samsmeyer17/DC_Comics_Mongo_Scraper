@@ -12,3 +12,7 @@
 body {
   background: lightgrey;
 }
+
+#weekly-comics-header {
+  margin-left: 40px
+}

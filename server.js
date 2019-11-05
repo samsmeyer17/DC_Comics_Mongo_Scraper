@@ -34,7 +34,7 @@ app.get("/scrape", function (req, res) {
       var result = {}
       result.img = $(element).find('a').find('img').attr('src');
       result.title = $(element).find('span').find('a').text()
-      
+
 
 
       db.Article.create(result)
@@ -45,8 +45,7 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
-    res.send("Scrape Complete")
-    window.location("/articles")
+    res.render("/articles")
   })
 })
 
@@ -63,25 +62,39 @@ app.get("/articles", function (req, res) {
 app.get("/", function (req, res) {
   db.Article.find({})
     .then((dbArticle) => {
-      res.render("index", {articles: dbArticle})
+      res.render("index", { articles: dbArticle })
     })
     .catch((err) => {
       res.json(err)
     })
+})
+
+app.get("/note-modal", function(req, res) {
+  res.render("/note")
 })
 
 app.get("/saved", function (req, res) {
   db.Article.find({})
     .then((dbArticle) => {
-      res.render("saved", {articles: dbArticle})
+      res.render("saved", { articles: dbArticle })
     })
     .catch((err) => {
       res.json(err)
     })
 })
 
-app.post("/articles/:id", function (req, res) {
+app.get("/notes/:id", function (req, res) {
   db.Note.create(req.body)
+    .then((dbNote) => {
+      console.log(dbNote)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
+app.put("/notes/:noteTitle", function (req, res) {
+  db.Note.findOneAndUpdate({ _id: id }, { $set: { title: noteTitle, body: noteBody }})
 
 })
 
@@ -89,25 +102,24 @@ app.put("/articles/:id", function (req, res) {
 
   // req.params  or
   let id = req.params.id
-  db.Article.findOneAndUpdate({_id: id}, {$set:{saved: true}})
-    .then(function(dbArticle){
-    res.json(dbArticle)
-  })
+  db.Article.findOneAndUpdate({ _id: id }, { $set: { saved: true } })
+    .then(function (dbArticle) {
+      res.json(dbArticle)
+    })
 
 })
 
 app.put("/saved/:id", function (req, res) {
   let id = req.params.id
-  db.Article.findOneAndUpdate({_id: id}, {$set:{saved: false}})
-    .then(function(dbArticle){
-    res.json(dbArticle)
-  })
+  db.Article.findOneAndUpdate({ _id: id }, { $set: { saved: false } })
+    .then(function (dbArticle) {
+      res.json(dbArticle)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 
 })
-
-
-
-
 
 app.listen(PORT, function () {
   console.log("App listening on: " + PORT)

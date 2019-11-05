@@ -30,6 +30,15 @@ $(".unsave-article-btn").on("click", function() {
 })
 
 $("add-note-btn").on("submit", function() {
-  
+  let noteTitle = $("#note-title").val().trim();
+  let noteBody = $("#note-body").val().trim();
+
+  $.ajax({
+    method: "PUT",
+    url: "/notes/" + noteTitle
+  }).then(function(data) {
+    console.log(data)
+    window.location.replace("/articles")
+  })
 
 })
