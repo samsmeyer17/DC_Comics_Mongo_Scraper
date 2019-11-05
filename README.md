@@ -41,5 +41,6 @@ This app allows you to scrape the DC comics website for the weekly comic covers.
 Developing the entire application from the css to the database
 
 ** Comments **
-Link to [Heroku Deployed Application]()
+Link to [Heroku Deployed Application](https://morning-tundra-27207.herokuapp.com/)
 Link to [Portfolio](https://samsmeyer17.github.io/Responsive-Portfolio/)
+Link to [GitHub](https://github.com/samsmeyer17/Mongo_Scraper)
